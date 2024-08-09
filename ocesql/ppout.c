@@ -461,7 +461,7 @@ void ppoutputconnect(struct cb_exec_list *list){
 			memset(buff, 0, sizeof(buff));
 			com_sprintf(buff,sizeof(buff), "E%03d",iret);
 			printerrormsg(list->dbName, lineNUM, buff);
-			return;
+			exit(1);
 		}
 		memset(buff, 0, sizeof(buff));
 		com_sprintf(buff,sizeof(buff), "OCESQL%10sBY REFERENCE %s\n"," ", list->dbName);
@@ -480,7 +480,7 @@ void ppoutputconnect(struct cb_exec_list *list){
 			memset(buff, 0, sizeof(buff));
 			com_sprintf(buff,sizeof(buff), "E%03d",iret);
 			printerrormsg(host_list->hostreference, host_list->lineno, buff);
-			return;
+			exit(1);
 		}
 		memset(buff, 0, sizeof(buff));
 		com_sprintf(buff,sizeof(buff), "OCESQL%10sBY REFERENCE %s\n"," ",host_list->hostreference);
@@ -542,7 +542,8 @@ int ppoutputparam(struct cb_hostreference_list *host_list, int iteration){
 		memset(buff, 0, sizeof(buff));
 		com_sprintf(buff,sizeof(buff), "E%03d",iret);
 		printerrormsg(host_list->hostreference, host_list->lineno, buff);
-		return 0;
+		exit(1);
+		//return 0;
 	}
 
 	if(type == HVARTYPE_GROUP){
@@ -555,7 +556,8 @@ int ppoutputparam(struct cb_hostreference_list *host_list, int iteration){
 			com_sprintf(buff,sizeof(buff), "E%03d",ERR_NOTDEF_WORKING);
 			printerrormsg(host_list->hostreference, host_list->lineno,
 					buff);
-			return count;
+			exit(1);
+			//return count;
 		}
 
 		f = f->children;
@@ -567,7 +569,8 @@ int ppoutputparam(struct cb_hostreference_list *host_list, int iteration){
 				memset(buff, 0, sizeof(buff));
 				com_sprintf(buff,sizeof(buff), "E%03d",iret);
 				printerrormsg(f->sname, host_list->lineno, buff);
-				return count;
+				exit(1);
+				//return count;
 			}
 			_ppoutputparam(f->sname, type, digits, scale, iteration);
 			count++;
@@ -628,7 +631,8 @@ void ppoutputresgroup(struct cb_field *cf, int lineno, int iteration){
 		memset(buff, 0, sizeof(buff));
 		com_sprintf(buff,sizeof(buff), "E%03d",iret);
 		printerrormsg(cf->sname, lineno, buff);
-		return;
+		exit(1);
+		//return;
 	}
 
 	if(type == HVARTYPE_GROUP){
@@ -664,7 +668,8 @@ void ppoutputexecprepare(struct cb_exec_list *list){
 			com_sprintf(buff,sizeof(buff), "E%03d",iret);
 			printerrormsg(host_list->hostreference, host_list->lineno,
 					buff);
-			return;
+			exit(1);
+			//return;
 		}
 
 		while(host_list){
@@ -698,7 +703,8 @@ void ppoutputexecprepare(struct cb_exec_list *list){
 			memset(buff, 0, sizeof(buff));
 			com_sprintf(buff,sizeof(buff), "E%03d",iret);
 			printerrormsg(list->dbName, lineNUM, buff);
-			return;
+			exit(1);
+			//return;
 		}
 
 		memset(buff, 0, sizeof(buff));
@@ -756,7 +762,8 @@ void ppoutputfetch(struct cb_exec_list *list){
 		com_sprintf(buff,sizeof(buff), "E%03d",iret);
 		printerrormsg(res_host_list->hostreference, res_host_list->lineno,
 					  buff);
-		return;
+		exit(1);
+		//return;
 	}
 
 	if(type == HVARTYPE_GROUP){
@@ -769,7 +776,8 @@ void ppoutputfetch(struct cb_exec_list *list){
 			com_sprintf(buff,sizeof(buff), "E%03d",ERR_NOTDEF_WORKING);
 			printerrormsg(res_host_list->hostreference, res_host_list->lineno,
 						  buff);
-			return;
+			exit(1);
+			//return;
 		}
 
 		child = parent->children;
@@ -782,7 +790,8 @@ void ppoutputfetch(struct cb_exec_list *list){
 				memset(buff, 0, sizeof(buff));
 				com_sprintf(buff,sizeof(buff), "E%03d",iret);
 				printerrormsg(res_host_list->hostreference, res_host_list->lineno, buff);
-				return;
+				exit(1);
+				//return;
 			}
 		} else {
 			iteration = -1;
@@ -794,7 +803,8 @@ void ppoutputfetch(struct cb_exec_list *list){
 				memset(buff, 0, sizeof(buff));
 				com_sprintf(buff,sizeof(buff), "E%03d",iret);
 				printerrormsg(res_host_list->hostreference, res_host_list->lineno, buff);
-				return;
+				exit(1);
+				//return;
 			}
 		}
 	} else {
@@ -806,7 +816,8 @@ void ppoutputfetch(struct cb_exec_list *list){
 				com_sprintf(buff,sizeof(buff), "E%03d",iret);
 				printerrormsg(res_host_list->hostreference, res_host_list->lineno,
 							  buff);
-				return;
+				exit(1);
+				//return;
 			}
 			ppoutputresparam(res_host_list->hostreference, type, digits, scale,iteration);
 			res_host_list = res_host_list->next;
@@ -905,7 +916,8 @@ void ppoutputcommit(struct cb_exec_list *list){
 			memset(buff, 0, sizeof(buff));
 			com_sprintf(buff,sizeof(buff), "E%03d",iret);
 			printerrormsg(list->dbName, lineNUM, buff);
-			return;
+			exit(1);
+			//return;
 		}
 
 		memset(buff, 0, sizeof(buff));
@@ -970,7 +982,8 @@ void ppoutputrollback(struct cb_exec_list *list){
 			memset(buff, 0, sizeof(buff));
 			com_sprintf(buff,sizeof(buff), "E%03d",iret);
 			printerrormsg(list->dbName, lineNUM, buff);
-			return;
+			exit(1);
+			//return;
 		}
 
 		memset(buff, 0, sizeof(buff));
@@ -1026,12 +1039,14 @@ void ppoutputprepare(struct cb_exec_list *list){
 		memset(buff, 0, sizeof(buff));
 		com_sprintf(buff,sizeof(buff), "E%03d",iret);
 		printerrormsg(list->host_list->hostreference, list->host_list->lineno, buff);
-		return;
+		exit(1);
+		//return;
 	} else if(l != HVARTYPE_GROUP){
 		memset(buff, 0, sizeof(buff));
 		com_sprintf(buff,sizeof(buff), "E%03d",ERR_PREPARE_ISNT_GROUP);
+		//printf("dbg: into printerrmsg\n");
 		printerrormsg(list->host_list->hostreference, list->host_list->lineno, buff);
-		return;
+		exit(1);
 	}
 
 	parent = getfieldbyname(list->host_list->hostreference);
@@ -1041,7 +1056,8 @@ void ppoutputprepare(struct cb_exec_list *list){
 	     com_sprintf(buff,sizeof(buff), "E%03d",ERR_NOTDEF_WORKING);
 	     printerrormsg(list->host_list->hostreference, list->host_list->lineno,
 			   buff);
-	     return;
+	     exit(1);
+		 //return;
 	}
 
 	child = parent->children;
@@ -1060,7 +1076,8 @@ void ppoutputprepare(struct cb_exec_list *list){
 	     printerrormsg(list->host_list->hostreference, list->host_list->lineno,
 			   buff);
 	     free(comp_varname);
-	     return;
+	     exit(1);
+		 //return;
 	}
 
 	memset(comp_varname, 0, comp_varname_len);
@@ -1071,7 +1088,8 @@ void ppoutputprepare(struct cb_exec_list *list){
 	     printerrormsg(list->host_list->hostreference, list->host_list->lineno,
 			   buff);
 	     free(comp_varname);
-	     return;
+	     exit(1);
+		 //return;
 	}
 	free(comp_varname);
 
@@ -1113,7 +1131,8 @@ void ppoutputdisconnect(struct cb_exec_list *list){
 			memset(buff, 0, sizeof(buff));
 			com_sprintf(buff,sizeof(buff), "E%03d",iret);
 			printerrormsg(list->dbName, lineNUM, buff);
-			return;
+			exit(1);
+			//return;
 		}
 
 		memset(buff, 0, sizeof(buff));
@@ -1165,7 +1184,8 @@ void ppoutputother(struct cb_exec_list *list){
 				memset(buff, 0, sizeof(buff));
 				com_sprintf(buff,sizeof(buff), "E%03d",iret);
 				printerrormsg(list->dbName, lineNUM, buff);
-				return;
+				exit(1);
+				//return;
 			}
 
 			memset(buff, 0, sizeof(buff));
@@ -1290,7 +1310,8 @@ exit_occurs_check:
 			memset(buff, 0, sizeof(buff));
 			com_sprintf(buff,sizeof(buff), "E%03d",iret);
 			printerrormsg(list->dbName, lineNUM, buff);
-			return;
+			exit(1);
+			//return;
 		}
 
 		memset(buff, 0, sizeof(buff));
@@ -1585,7 +1606,8 @@ void ppbuff(struct cb_exec_list *list){
 					memset(buff, 0, sizeof(buff));
 					com_sprintf(buff,sizeof(buff), "E%03d",iret);
 					printerrormsg(list->dbName, lineNUM, buff);
-					return;
+					exit(1);
+					//return;
 				}
 
 				memset(buff, 0, sizeof(buff));
@@ -1666,7 +1688,8 @@ void ppbuff(struct cb_exec_list *list){
 				com_sprintf(buff,sizeof(buff), "E%03d",iret);
 				printerrormsg(wk_res_host->hostreference, wk_res_host->lineno,
 							  buff);
-				return;
+				exit(1);
+				//return;
 			}
 
 			if(var_type == HVARTYPE_GROUP){
@@ -1679,7 +1702,8 @@ void ppbuff(struct cb_exec_list *list){
 					com_sprintf(buff,sizeof(buff), "E%03d",ERR_NOTDEF_WORKING);
 					printerrormsg(wk_res_host->hostreference, wk_res_host->lineno,
 								  buff);
-					return;
+					exit(1);
+					//return;
 				}
 
 				child = parent->children;
@@ -1693,7 +1717,8 @@ void ppbuff(struct cb_exec_list *list){
 						com_sprintf(buff,sizeof(buff), "E%03d",iret);
 						printerrormsg(wk_res_host->hostreference, wk_res_host->lineno,
 									  buff);
-						return;
+						exit(1);
+						//return;
 					}
 				} else {
 					occurs_is_parent = 0;
@@ -1705,7 +1730,8 @@ void ppbuff(struct cb_exec_list *list){
 						com_sprintf(buff,sizeof(buff), "E%03d",iret);
 						printerrormsg(wk_res_host->hostreference, wk_res_host->lineno,
 									  buff);
-						return;
+						exit(1);
+						//return;
 					}
 				}
 
@@ -1715,7 +1741,8 @@ void ppbuff(struct cb_exec_list *list){
 						memset(buff, 0, sizeof(buff));
 						com_sprintf(buff,sizeof(buff), "E%03d",iret);
 						printerrormsg(child->sname, wk_res_host->lineno, buff);
-						return;
+						exit(1);
+						//return;
 					}
 					ppoutputresparam(child->sname, var_type, var_len, var_scale,iteration);
 					child = child->sister;
@@ -1731,7 +1758,8 @@ void ppbuff(struct cb_exec_list *list){
 						com_sprintf(buff,sizeof(buff), "E%03d",iret);
 						printerrormsg(wk_res_host->hostreference, wk_res_host->lineno,
 									  buff);
-						return;
+						exit(1);
+						//return;
 					}
 
 					ppoutputresparam(wk_res_host->hostreference, var_type, var_len, var_scale, 0);
@@ -1799,7 +1827,8 @@ void ppbuff(struct cb_exec_list *list){
 					memset(buff, 0, sizeof(buff));
 					com_sprintf(buff,sizeof(buff), "E%03d",iret);
 					printerrormsg(list->dbName, lineNUM, buff);
-					return;
+					exit(1);
+					//return;
 				}
 
 				memset(buff, 0, sizeof(buff));
@@ -1870,7 +1899,8 @@ void ppbuff(struct cb_exec_list *list){
 				memset(buff, 0, sizeof(buff));
 				com_sprintf(buff,sizeof(buff), "E%03d",iret);
 				printerrormsg(list->dbName, lineNUM, buff);
-				return;
+				exit(1);
+				//return;
 			}
 
 			memset(buff, 0, sizeof(buff));
@@ -1984,6 +2014,7 @@ void ppbuff_incfile(struct cb_exec_list *list){
 				memset(buff, 0, sizeof(buff));
 				com_sprintf(buff,sizeof(buff), "E%03d",ERR_EXCEED_LIMIT_LINE_LENGTH);
 				printerrormsg("", lineNUM, buff);
+				exit(1);
 			}
 
 			com_strcpy(out,sizeof(out),"OCESQL");

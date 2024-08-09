@@ -71,7 +71,6 @@ int spreadchar(char * code , char* msg, char *ret){
 		return 0;
 
 	p = msg + strlen(code) + 1;
-
 	if(p == NULL)
 		return 0;
 
@@ -89,8 +88,10 @@ int geterrormsg(char *code , char *msg, int len){
 	 memset(msg, 0, len);
 
 	 memset(buf, 0, sizeof(buf));
+	 //printf("dbg: errormsg\n");
 	 for(i=0; i<ERRORMSGNUM; i++){
 	 	if (spreadchar(code ,errormsg[i], msg) == 1 ){
+			//printf("dbg: p is 1\n");
 	 		return 1;
 	 	}
 	 	memset(buf, 0, sizeof(buf));
@@ -112,7 +113,7 @@ int printerrormsg(char *name, int line, char * code){
 
 	p = buff + strlen(buff);
 	ilen -= strlen(buff)+1;
-
+//printf("dbg: into geterrormsg\n");
 	if( geterrormsg(code,p, ilen) == 0){
 		printf("printerrmsg: no error message for '%4s'\n",  code);
 		return 0;
@@ -120,7 +121,6 @@ int printerrormsg(char *name, int line, char * code){
 
 	fputs(buff, pfile);
 	fputs("\n", pfile);
-
 	return 1;
 }
 
