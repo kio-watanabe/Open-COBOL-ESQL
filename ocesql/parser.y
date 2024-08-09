@@ -630,10 +630,10 @@ int gethostvarianttype(char *name,  int *type, int *digits, int *scale)
 			}
 			break;
 		case PIC_ALPHANUMERIC_VARYING:
-			tmp_type =  HVARTYPE_ALPHANUMERIC_VARYING;
+			tmp_type =  HVARTYPE_GROUP;
 			break;
 		case PIC_NATIONAL_VARYING:
-			tmp_type =  HVARTYPE_JAPANESE_VARYING;
+			tmp_type =  HVARTYPE_GROUP;
 			break;
 		default:
 			break;

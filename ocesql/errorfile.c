@@ -71,7 +71,6 @@ int spreadchar(char * code , char* msg, char *ret){
 		return 0;
 
 	p = msg + strlen(code) + 1;
-
 	if(p == NULL)
 		return 0;
 
@@ -120,7 +119,6 @@ int printerrormsg(char *name, int line, char * code){
 
 	fputs(buff, pfile);
 	fputs("\n", pfile);
-
 	return 1;
 }
 
