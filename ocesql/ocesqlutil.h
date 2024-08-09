@@ -27,7 +27,7 @@ char *com_strncpy(char *, size_t, const char*, size_t);
 void com_dupenv(char **, size_t *,const char *);
 int com_getpid(void);
 int com_unlink(const char *);
-void com_readline(FILE *, char *, int *, int *);
+int com_readline(FILE *, char *, int *);
 int com_stricmp(const char *, const char *);
 
 #endif

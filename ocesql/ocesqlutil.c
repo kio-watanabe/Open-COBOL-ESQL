@@ -120,8 +120,9 @@ com_unlink(const char *df){
 #endif
 }
 
-void
-com_readline(FILE *readfile, char *inbuff, int *lineno, int *eofflg){
+int
+com_readline(FILE *readfile, char *inbuff, int *lineno){
+	int eofflg = 0;
 #ifdef _WIN32
 	char ipchar;
 	int n;
@@ -132,7 +133,7 @@ com_readline(FILE *readfile, char *inbuff, int *lineno, int *eofflg){
 		for (n = 0;ipchar != '\n';n++) {
 			ipchar = fgetc(readfile);
 			if (ipchar==EOF){
-				*eofflg = 1;
+				eofflg = 1;
 				break;
 			}
 			inbuff[n] = ipchar;
@@ -141,6 +142,7 @@ com_readline(FILE *readfile, char *inbuff, int *lineno, int *eofflg){
 		inbuff[n] = '\0';
 		*lineno = *lineno + 1;
 	}
+	return eofflg;
 #else
 	if(fgets(inbuff, 256, readfile) != NULL){
 		int len = strlen(inbuff);
@@ -149,12 +151,13 @@ com_readline(FILE *readfile, char *inbuff, int *lineno, int *eofflg){
 			inbuff[len-1] = '\0';
 		}
 	} else if(feof(readfile)){
-		*eofflg = 1;
+		eofflg = 1;
 	} else {
 		printmsg("com_readline: although EOF wasn't detected, fgets() returned NULL ");
-		*eofflg = 1;
+		eofflg = 1;
 	}
 	*lineno = *lineno + 1;
+	return eofflg;
 #endif
 }
 

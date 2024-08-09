@@ -2022,15 +2022,12 @@ void ppoutput(char *ppin,char *ppout,struct cb_exec_list *head){
 	struct cb_exec_list *l;
 	l = head;
 	lineNUM = 0;
-	EOFflg = 0;
 
  	readfile = fopen_or_die(ppin,"r");
  	outfile  = fopen_or_die(ppout,"w");
 
-	EOFFLG = 0;
 	if (readfile && outfile){
-		for(;EOFflg != 1;){
-			com_readline(readfile, inbuff, &lineNUM, &EOFflg);
+		while(!com_readline(readfile, inbuff, &lineNUM)){
 			if(strstr(inbuff, INC_START_MARK) != NULL ||
 			strstr(inbuff, INC__END__MARK) != NULL){
 				continue;
@@ -2055,11 +2052,6 @@ void ppoutput(char *ppin,char *ppout,struct cb_exec_list *head){
 					outbuff = inbuff;
 					len = strlen(outbuff);
 					fwrite (outbuff ,len, 1 , outfile );
-
-					if (EOFflg == 1){
-						fputc('\n',outfile);
-
-					}
 				}
 				else{
 					if(lineNUM - l->endLine == 1){
@@ -2085,7 +2077,7 @@ void ppoutput(char *ppin,char *ppout,struct cb_exec_list *head){
 						fwrite (outbuff ,len, 1 , outfile );
 					}else{
 						outbuff = inbuff;
-						len = strlen(outbuff);
+						len = strlen(outbuff);				
 						fwrite (outbuff ,len, 1 , outfile );
 
 					}
@@ -2114,10 +2106,8 @@ void ppoutput_incfile(char *ppin,char *ppout,struct cb_exec_list *head){
  	readfile = fopen_or_die(ppin,"r");
  	outfile  = fopen_or_die(ppout,"w");
 
-	EOFFLG = 0;
 	if (readfile && outfile){
-		for(;EOFflg != 1;){
-			com_readline(readfile, inbuff, &lineNUM, &EOFflg);
+		while(!com_readline(readfile, inbuff, &lineNUM)){
 			if(head){
 				if (l->startLine<= lineNUM && l->endLine>=lineNUM){
 					if (strcmp(l->commandName, "INCFILE") == 0){
@@ -2133,10 +2123,6 @@ void ppoutput_incfile(char *ppin,char *ppout,struct cb_exec_list *head){
 					outbuff = inbuff;
 					len = strlen(outbuff);
 					fwrite (outbuff ,len, 1 , outfile );
-
-					if (EOFflg == 1){
-						fputc('\n',outfile);
-					}
 				}
 				else{
 					if(lineNUM - l->endLine == 1){
