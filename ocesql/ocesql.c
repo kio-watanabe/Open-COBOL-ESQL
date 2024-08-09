@@ -106,7 +106,6 @@ int translate (struct filename *fn)
 	ret =  yyparse ();
 	fclose (yyin);
 	if (ret) {
-		//printf("dbg: syntax error\n");
 		return ret;
 	}
 	ppoutput_incfile(fn->source, tmpfile, exec_list);
@@ -128,7 +127,6 @@ int translate (struct filename *fn)
 	if (ret) {
 		return ret;
 	}
-	//printf("dbg: ppoutput\n");
 	ppoutput(tmpfile, fn->translate, exec_list);
 
 	return 0;
