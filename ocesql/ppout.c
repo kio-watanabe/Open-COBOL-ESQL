@@ -758,11 +758,19 @@ void ppoutputfetch(struct cb_exec_list *list){
 					  buff);
 		return;
 	}
+	printf("dbg: type=%d\n", type);
+	struct cb_field *parent, *child, *grandparent;
+	// struct cb_exec_list *prev_list = list - 1;
+	// printf("dbg: prev_res_host_list->hostreference=%s\n", prev_list->res_host_list->hostreference);
+	parent = getfieldbyname(res_host_list->hostreference);
+	child = parent->children;
+	grandparent = parent->parent;
+	//printf("dbg: parent->sname=%d\n", parent->parent->occurs);
 
 	if(type == HVARTYPE_GROUP){
-		struct cb_field *parent, *child;
+		// struct cb_field *parent, *child;
 
-		parent = getfieldbyname(res_host_list->hostreference);
+		// parent = getfieldbyname(res_host_list->hostreference);
 		if(parent == NULL){
 			printmsg("%s:%d\n", res_host_list->hostreference, ERR_NOTDEF_WORKING);
 			memset(buff, 0, sizeof(buff));
@@ -772,7 +780,7 @@ void ppoutputfetch(struct cb_exec_list *list){
 			return;
 		}
 
-		child = parent->children;
+		// child = parent->children;
 		if(parent->occurs){
 			iteration = parent->occurs;
 			occurs_is_parent = 1;
@@ -808,7 +816,13 @@ void ppoutputfetch(struct cb_exec_list *list){
 							  buff);
 				return;
 			}
-			ppoutputresparam(res_host_list->hostreference, type, digits, scale,iteration);
+			//printf("dbg: parent->occurs=%d\n", parent->occurs);
+			if(parent->occurs){
+				iteration = parent->occurs;
+			}else if(grandparent->occurs){
+				iteration = grandparent->occurs;
+			}
+			ppoutputresparam(res_host_list->hostreference, type, digits, scale,iteration);//dbg: OCESQLSetResultParamsの出力
 			res_host_list = res_host_list->next;
 		}
 	}
@@ -833,12 +847,13 @@ void ppoutputfetch(struct cb_exec_list *list){
 		memset(buff, 0, sizeof(buff));
 		com_sprintf(buff,sizeof(buff), "OCESQL%5sEND-CALL\n", " ");
 		fputs(buff, outfile);
-
+		printf("dbg: occurs_is_parent=%d, length=%d\n", occurs_is_parent, length);
 		memset(buff, 0, sizeof(buff));
 		com_sprintf(buff,sizeof(buff), "OCESQL%5sCALL \"OCESQLCursorFetchOccurs\" USING\n" ," ");
 		fputs(buff, outfile);
 		_printlog("Generate:OCESQLCursorFetchOccurs");
 	} else {
+		printf("dbg: occurs_is_parent=%d, length=%d\n", occurs_is_parent, length);
 		memset(buff, 0, sizeof(buff));
 		com_sprintf(buff,sizeof(buff), "OCESQL%5sCALL \"OCESQLCursorFetchOne\" USING\n" ," ");
 		fputs(buff, outfile);
@@ -1683,7 +1698,6 @@ void ppbuff(struct cb_exec_list *list){
 				}
 
 				child = parent->children;
-
 				if(parent->occurs){
 					iteration = parent->occurs;
 					occurs_is_parent = 1;
@@ -2216,7 +2230,7 @@ int get_host_group_length(struct cb_field *field, int *length){
 
 int get_host_group_table_info(struct cb_field *field, int *iteration, int *length){
 	if(field == NULL) return 0;
-
+	printf("dbg: field->occurs=%d\n", field->occurs);
 	if(field->occurs){
 		if(*iteration == -1 || field->occurs < *iteration){
 			*iteration = field->occurs;
