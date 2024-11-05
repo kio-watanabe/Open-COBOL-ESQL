@@ -759,15 +759,10 @@ void ppoutputfetch(struct cb_exec_list *list){
 							buff);
 			return;
 		}
-		struct cb_field *parent, *child; //, *grandparent;
-
+		
+		struct cb_field *parent, *child;
 		parent = getfieldbyname(res_host_list->hostreference);
-		//grandparent = parent->parent;
 		if(type == HVARTYPE_GROUP){
-			printf("dbb: parent->occurs=%d\n", parent->occurs);
-			// struct cb_field *parent, *child;
-
-			// parent = getfieldbyname(res_host_list->hostreference);
 			if(parent == NULL){
 				printmsg("%s:%d\n", res_host_list->hostreference, ERR_NOTDEF_WORKING);
 				memset(buff, 0, sizeof(buff));
