@@ -2709,7 +2709,7 @@ cat >prog.cbl <<'_ATEOF'
 
            EXEC SQL
                FETCH C1 INTO :DATA-FETCH-ID, :DATA-FETCH-V
-           END-EXEC
+           END-EXEC.
 
            PERFORM VARYING IDX FROM 1 BY 1 UNTIL IDX > 5
                IF SQLCODE = 0
